@@ -10,6 +10,15 @@ class fraction
         double numerator;
         double denominator;
     public:
+        double getN1()
+        {
+            return numerator;
+        }
+        double getN2()
+        {
+            return denominator;
+        }
+
         void setN1(double _n1)
         {
             numerator = _n1;
@@ -36,6 +45,31 @@ class fraction
             {
                 cin >> t2;
             }
+        }
+
+        fraction addWithAnother(fraction b)
+        {
+            fraction result;
+            result.setN1(getN1() + b.getN1());
+            result.setN2(getN2() + b.getN2());
+        }
+        fraction subWithAnother(fraction b)
+        {
+            fraction result;
+            result.setN1(getN1() - b.getN1());
+            result.setN2(getN2() - b.getN2());
+        }
+        fraction multWithAnother(fraction b)
+        {
+            fraction result;
+            result.setN1(getN1() * b.getN1());
+            result.setN2(getN2() * b.getN2());
+        }
+        fraction divWithAnother(fraction b)
+        {
+            fraction result;
+            result.setN1(getN1() / b.getN1());
+            result.setN2(getN2() / b.getN2());
         }
 };
 
