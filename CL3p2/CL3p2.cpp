@@ -71,6 +71,12 @@ class fraction
             result.setN1(getN1() / b.getN1());
             result.setN2(getN2() / b.getN2());
         }
+        void simplify()
+        {
+            float divisor = gcd(getN1(), getN2());
+            setN1(getN1()/divisor);
+            setN2(getN2()/divisor);
+        }
 };
 
 int main()
