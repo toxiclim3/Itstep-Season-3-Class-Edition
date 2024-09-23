@@ -90,7 +90,7 @@ class laptop
         ram ram;
     public:
 
-        laptop(char* manuf, char* model, char* cpu_manuf, char* cpu_model, int cpu_cores, double cpu_frequency, char* gpu_manuf, char* gpu_model, int gpu_cores, double gpu_frequency, int gpu_vram_size, double gpu_vram_freq) : cpu(cpu_manuf,cpu_model,cpu_cores,cpu_frequency), gpu(gpu_manuf,gpu_model,gpu_cores,gpu_frequency,gpu_vram_size,gpu_vram_freq), vram_size(vram_size), vram_frequency(vram_freq)
+        laptop(char* manuf, char* model, char* cpu_manuf, char* cpu_model, int cpu_cores, double cpu_frequency, char* gpu_manuf, char* gpu_model, int gpu_cores, double gpu_frequency, int gpu_vram_size, double gpu_vram_freq, char* ram_manuf, char* ram_model, int ram_size, double ram_frequency) : cpu(cpu_manuf,cpu_model,cpu_cores,cpu_frequency), gpu(gpu_manuf,gpu_model,gpu_cores,gpu_frequency,gpu_vram_size,gpu_vram_freq), ram(ram_manuf,ram_model,ram_size,ram_frequency), vram_frequency(vram_freq)
         {
             this->manufacturer = new char[strlen(manuf) + 1];
             strcpy_s(this->manufacturer, strlen(manuf) + 1, manuf);
