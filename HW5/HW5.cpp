@@ -11,7 +11,15 @@ class cpu
         char* model;
         int cores;
         double frequency;
+    public:
+        cpu(char* manuf, char* model, int cores, double frequency):cores(cores),frequency(frequency)
+        {
+            this->manufacturer = new char[strlen(manuf) + 1];
+            strcpy_s(this->manufacturer, strlen(manuf) + 1, manuf);
 
+            this->model = new char[strlen(model) + 1];
+            strcpy_s(this->model, strlen(model) + 1, model);
+        }
 };
 
 class ssd
@@ -21,6 +29,15 @@ class ssd
         char* model;
         double frequency; //speed
         int size;
+    public:
+        ssd(char* manuf, char* model, int size, double frequency) : size(size), frequency(frequency)
+        {
+            this->manufacturer = new char[strlen(manuf) + 1];
+            strcpy_s(this->manufacturer, strlen(manuf) + 1, manuf);
+
+            this->model = new char[strlen(model) + 1];
+            strcpy_s(this->model, strlen(model) + 1, model);
+        }
 };
 
 class graphicsCard
@@ -32,6 +49,15 @@ class graphicsCard
         double frequency;
         int vram_size;
         double vram_frequency;
+    public:
+        graphicsCard(char* manuf, char* model, int cores, double frequency,int vram_size,double vram_freq) : cores(cores), frequency(frequency),vram_size(vram_size),vram_frequency(vram_freq)
+        {
+            this->manufacturer = new char[strlen(manuf) + 1];
+            strcpy_s(this->manufacturer, strlen(manuf) + 1, manuf);
+
+            this->model = new char[strlen(model) + 1];
+            strcpy_s(this->model, strlen(model) + 1, model);
+        }
 };
 
 class ram
@@ -41,6 +67,15 @@ class ram
         char* model;
         int size;
         double frequency;
+    public:
+        ram(char* manuf, char* model, int size, double frequency) : size(size), frequency(frequency)
+        {
+            this->manufacturer = new char[strlen(manuf) + 1];
+            strcpy_s(this->manufacturer, strlen(manuf) + 1, manuf);
+
+            this->model = new char[strlen(model) + 1];
+            strcpy_s(this->model, strlen(model) + 1, model);
+        }
 };
 
 class laptop
@@ -53,7 +88,16 @@ class laptop
         ssd ssd;
         graphicsCard gpu;
         ram ram;
+    public:
 
+        laptop(char* manuf, char* model, char* cpu_manuf, char* cpu_model, int cpu_cores, double cpu_frequency, char* gpu_manuf, char* gpu_model, int gpu_cores, double gpu_frequency, int gpu_vram_size, double gpu_vram_freq) : cpu(cpu_manuf,cpu_model,cpu_cores,cpu_frequency), gpu(gpu_manuf,gpu_model,gpu_cores,gpu_frequency,gpu_vram_size,gpu_vram_freq), vram_size(vram_size), vram_frequency(vram_freq)
+        {
+            this->manufacturer = new char[strlen(manuf) + 1];
+            strcpy_s(this->manufacturer, strlen(manuf) + 1, manuf);
+
+            this->model = new char[strlen(model) + 1];
+            strcpy_s(this->model, strlen(model) + 1, model);
+        }
 };
 
 int main()
