@@ -69,7 +69,7 @@ void car::input()
 
 	char model[48];
 	printf("Enter the car's name:\n");
-	cin >> model;
+	std::cin >> model;
 	strcpy_s(this->model, strlen(model) + 1, model);
 
 	if (this->color != nullptr)
@@ -80,14 +80,14 @@ void car::input()
 
 	char color[48];
 	printf("Enter the car's color:\n");
-	cin >> color;
+	std::cin >> color;
 	strcpy_s(this->color, strlen(color) + 1, color);
 
 	printf("Enter the car's manufacturing year:\n");
-	cin >> this->year;
+	std::cin >> this->year;
 
 	printf("Enter the car's price:\n");
-	cin >> this->price;
+	std::cin >> this->price;
 }
 void car::display()
 {
