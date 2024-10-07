@@ -35,9 +35,31 @@ class myStr
 			this->size = 0;
 		}
 
-		myStr operator()()
+		myStr operator()(char* buffer)
 		{
+			if (this->text != nullptr)
+			{
+				delete[] this->text;
+			}
+			this->text = nullptr;
 
+			this->text = new char[myStrlen(buffer) + 1];
+			strcpy_s(this->text, myStrlen(buffer) + 1, buffer);
+
+			this->size = myStrlen(text);
+		};
+		myStr operator()(const char* buffer)
+		{
+			if (this->text != nullptr)
+			{
+				delete[] this->text;
+			}
+			this->text = nullptr;
+
+			this->text = new char[myStrlen(buffer) + 1];
+			strcpy_s(this->text, myStrlen(buffer) + 1, buffer);
+
+			this->size = myStrlen(text);
 		};
 
 		void input()
@@ -49,6 +71,7 @@ class myStr
 			{
 				delete[] this->text;
 			}
+			this->text = nullptr;
 
 			this->text = new char[myStrlen(buffer) + 1];
 			strcpy_s(this->text, myStrlen(buffer) + 1, buffer);
@@ -70,6 +93,15 @@ class myStr
 			return j;
 		}
 		int myStrlen(char* t)
+		{
+			int j = 0;
+			while (t[j] != '\0')
+			{
+				j++;
+			}
+			return j;
+		}
+		int myStrlen(const char* t)
 		{
 			int j = 0;
 			while (t[j] != '\0')
