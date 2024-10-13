@@ -6,7 +6,26 @@
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    myStr str1("The lazy brown dog jumped over the quick red fox");
+    myStr str2("Kuva tierlist 2020 real stuff");
+    char c = 'i';
+
+    str1.print();
+    str2.print();
+
+
+    /*printf("The character %c within str2 is at index %i\n", c, str2.myChr(c));
+
+    str2.myDelChr(c);
+    
+    str2.print();
+
+    printf("The string \"real\" in str2 is at index %i\n",str2.myStrStr("real"));
+
+    str1.myStrCat(str2);
+    */
+    str1.myStrcpy((str1 + c));
+    str1.print();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

@@ -25,12 +25,20 @@ class myStr
 
 			strcpy_s(this->text, myStrlen(text) + 1, text);
 		}
+		myStr(const char* text)
+		{
+			this->text = new char[myStrlen(text) + 1];
+			this->size = myStrlen(text);
+
+			strcpy_s(this->text, myStrlen(text) + 1, text);
+		}
 
 		~myStr()
 		{
 			if (this->text != nullptr)
 			{
 				delete[] this->text;
+				this->text = nullptr;
 			}
 			this->size = 0;
 		}
@@ -40,8 +48,8 @@ class myStr
 			if (this->text != nullptr)
 			{
 				delete[] this->text;
+				this->text = nullptr;
 			}
-			this->text = nullptr;
 
 			this->text = new char[myStrlen(buffer) + 1];
 			strcpy_s(this->text, myStrlen(buffer) + 1, buffer);
@@ -53,8 +61,8 @@ class myStr
 			if (this->text != nullptr)
 			{
 				delete[] this->text;
+				this->text = nullptr;
 			}
-			this->text = nullptr;
 
 			this->text = new char[myStrlen(buffer) + 1];
 			strcpy_s(this->text, myStrlen(buffer) + 1, buffer);
@@ -70,8 +78,8 @@ class myStr
 			if (this->text != nullptr)
 			{
 				delete[] this->text;
+				this->text = nullptr;
 			}
-			this->text = nullptr;
 
 			this->text = new char[myStrlen(buffer) + 1];
 			strcpy_s(this->text, myStrlen(buffer) + 1, buffer);
@@ -80,7 +88,7 @@ class myStr
 		}
 		void print()
 		{
-			printf("%s", this->text);
+			printf("%s\n", this->text);
 		}
 
 		int myStrlen()
@@ -116,6 +124,7 @@ class myStr
 			if (this->text != nullptr)
 			{
 				delete[] this->text;
+				this->text = nullptr;
 			}
 
 			this->text = new char[other.size + 1];
@@ -126,8 +135,9 @@ class myStr
 				this->text[i] = other.text[i];
 			}
 
-			this->text[this->size + 1] = '\0';
+			this->text[this->size] = '\0';
 		};
+
 
 		int myChr(char c)
 		{
@@ -141,9 +151,149 @@ class myStr
 			return -1;
 		}
 
-		bool myStrStr(char* str)
+		void cutElement(int index)
 		{
+			myStr temp(this->size);
+			for (int i = 0,j=0; i < this->size; i++)
+			{
+				if (i != index)
+				{
+					temp.text[j] = this->text[i];
+					j++;
+				}
+			}
+			temp.size--;
+			temp.text[this->size] = '\0';
 
+			if (this->text != nullptr)
+			{
+				delete[] this->text;
+				this->text = nullptr;
+			}
+
+			this->text = new char[this->size];
+			this->size--;
+			
+
+			this->myStrcpy(temp);
 		}
 
+		void myDelChr(char c)
+		{
+			for (int i = 0; i < this->size; i++)
+			{
+				if (this->text[i] == c)
+				{
+					this->cutElement(i);
+					i = 0;
+				}
+			}
+		}
+
+		int myStrStr(char* str)
+		{
+			int j = 0;
+			bool matching = 0;
+			for (int i = 0; i < this->size - this->myStrlen(str) + 1; i++)
+			{
+				if (this->text[i] == str[j])
+				{
+					matching = 1;
+					while (j < this->myStrlen(str))
+					{
+						if (this->text[i] == str[j])
+						{
+							matching = 1;
+						}
+						else
+						{
+							j = 0;
+							matching = 0;
+							break;
+						}
+						j++;
+						i++;
+					}
+				}
+				if (matching)
+				{
+					return i - j + 1;
+				}
+			}
+			return -1;
+		}
+
+		int myStrStr(const char* str)
+		{
+			int j = 0;
+			bool matching = 0;
+			for (int i = 0; i < this->size - this->myStrlen(str) + 1; i++)
+			{
+				if (this->text[i] == str[j])
+				{
+					matching = 1;
+					while (j < this->myStrlen(str))
+					{
+						if (this->text[i] == str[j])
+						{
+							matching = 1;
+						}
+						else
+						{
+							j = 0;
+							matching = 0;
+							break;
+						}
+						j++;
+						i++;
+					}
+				}
+				if (matching)
+				{
+					return i - j + 1;
+				}
+			}
+			return -1;
+		}
+
+		void myStrCat(myStr& other)
+		{
+			myStr temp(this->size + other.size);
+
+			for (int i = 0; i < this->size; i++)
+			{
+				temp.text[i] = this->text[i];
+			}
+			for (int i = this->size,j = 0; i < this->size + other.size; i++)
+			{
+				temp.text[i] = other.text[j];
+				j++;
+			}
+
+			this->myStrcpy(temp);
+		}
+
+		int getSize()
+		{
+			return this->size;
+		}
+
+		char* getText()
+		{
+			return this->text;
+		}
 };
+
+myStr operator+(myStr& str,char c)
+{
+	myStr temp(str.getSize() + 1);
+	temp.getText()[0] = c;
+
+	for (int i = 1,j = 0; i < temp.getSize(); i++)
+	{
+		temp.getText()[i] = str.getText()[j];
+		j++;
+	}
+
+	return temp;
+}
