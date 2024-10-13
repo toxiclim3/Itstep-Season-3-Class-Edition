@@ -21,7 +21,10 @@ int main()
 	
 	str2.print();
 
-	printf("The string \"real\" in str2 is at index %i\n",str2.myStrStr("real"));
+	const char* search = "real";
+	const char* search2 = "that";
+	printf("The string \"%s\" in str2 is at index %i\n",search,str2.myStrStr(search));
+	printf("The string \"%s\" in str2 is at index %i\n",search2,str2.myStrStr(search2));
 
 	str1.myStrCat(str2);
 	str1.print();
