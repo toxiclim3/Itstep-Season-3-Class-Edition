@@ -282,18 +282,114 @@ class myStr
 		{
 			return this->text;
 		}
+
+		void operator()(myStr& str)
+		{
+			this->myStrcpy(str);
+		}
+
+		void operator()(char*& str)
+		{
+			myStr temp(str);
+			this->myStrcpy(temp);
+		}
+
+		myStr operator++()
+		{
+			myStr temp(this->size + 1);
+
+
+			for (int i = 0; i < temp.getSize() - 1; i++)
+			{
+				temp.getText()[i] = this->text[i];
+			}
+			temp.getText()[temp.getSize() - 1] = '_';
+			temp.getText()[temp.getSize()] = '\0';
+
+			this->myStrcpy(temp);
+			return *this;
+		}
+
+		myStr operator++(int)
+		{
+			myStr temp(this->size + 1);
+			temp.getText()[0] = '_';
+
+			for (int i = 1, j = 0; i < temp.getSize(); i++)
+			{
+				temp.getText()[i] = this->text[j];
+				j++;
+			}
+			temp.getText()[temp.getSize()] = '\0';
+
+			this->myStrcpy(temp);
+			return *this;
+		}
+
 };
+
+
 
 myStr operator+(myStr& str,char c)
 {
 	myStr temp(str.getSize() + 1);
+
+
+	for (int i = 0; i < temp.getSize() - 1; i++)
+	{
+		temp.getText()[i] = str.getText()[i];
+	}
+	temp.getText()[temp.getSize() - 1] = c;
+	temp.getText()[temp.getSize()] = '\0';
+
+	return temp;
+}
+myStr operator+( char c, myStr& str)
+{
+	myStr temp(str.getSize() + 1);
 	temp.getText()[0] = c;
 
-	for (int i = 1,j = 0; i < temp.getSize(); i++)
+	for (int i = 1, j = 0; i < temp.getSize(); i++)
 	{
 		temp.getText()[i] = str.getText()[j];
 		j++;
 	}
+	temp.getText()[temp.getSize()] = '\0';
+	return temp;
+}
+
+myStr operator+(myStr& str,int extra)
+{
+	myStr temp(str.getSize() + extra);
+
+	for (int i = 0; i < temp.getSize() - extra; i++)
+	{
+		temp.getText()[i] = str.getText()[i];
+	}
+	for (int i = temp.getSize() - extra; i < temp.getSize(); i++)
+	{
+		temp.getText()[i] = ' ';
+	}
+	temp.getText()[temp.getSize()] = '\0';
 
 	return temp;
 }
+
+myStr operator+(int extra, myStr& str)
+{
+	myStr temp(str.getSize() + extra);
+
+	for (int i = 0; i < extra; i++)
+	{
+		temp.getText()[i] = '_';
+		
+	}
+	for (int i = extra,j = 0; i < temp.getSize(); i++)
+	{
+		temp.getText()[i] = str.getText()[j];
+		j++;
+	}
+	temp.getText()[temp.getSize()] = '\0';
+	return temp;
+}
+
