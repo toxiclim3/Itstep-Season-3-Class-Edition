@@ -10,7 +10,7 @@ class myStr
 	public:
 		myStr()
 		{
-			this->text = new char[DEFAULT_STR_SIZE+1];
+			this->text = new char[DEFAULT_STR_SIZE + 1];
 			this->size = DEFAULT_STR_SIZE;
 		}
 		explicit myStr(int s)
@@ -23,14 +23,27 @@ class myStr
 			this->text = new char[myStrlen(text) + 1];
 			this->size = myStrlen(text);
 
-			strcpy_s(this->text, myStrlen(text) + 1, text);
+			this->myStrcpy(text, myStrlen(text));
 		}
 		myStr(const char* text)
 		{
 			this->text = new char[myStrlen(text) + 1];
 			this->size = myStrlen(text);
 
-			strcpy_s(this->text, myStrlen(text) + 1, text);
+			this->myStrcpy(text, myStrlen(text));
+		}
+		myStr(myStr& other)
+		{
+
+			this->text = new char[other.size + 1];
+			this->size = other.size;
+
+			for (int i = 0; i < other.size; i++)
+			{
+				this->text[i] = other.text[i];
+			}
+
+			this->text[this->size] = '\0';
 		}
 
 		~myStr()
@@ -121,6 +134,11 @@ class myStr
 
 		void myStrcpy(myStr& other)
 		{
+			if (this == &other)
+			{
+				return;
+			}
+
 			if (this->text != nullptr)
 			{
 				delete[] this->text;
@@ -130,7 +148,7 @@ class myStr
 			this->text = new char[other.size + 1];
 			this->size = other.size;
 
-			for (int i = 0; (i < other.size) && (other.text[i] != '\0'); i++)
+			for (int i = 0; i < other.size; i++)
 			{
 				this->text[i] = other.text[i];
 			}
@@ -138,6 +156,43 @@ class myStr
 			this->text[this->size] = '\0';
 		};
 
+		void myStrcpy(char* otext,int osize)
+		{
+			if (this->text != nullptr)
+			{
+				delete[] this->text;
+				this->text = nullptr;
+			}
+
+			this->text = new char[osize + 1];
+			this->size = osize;
+
+			for (int i = 0; i < osize; i++)
+			{
+				this->text[i] = otext[i];
+			}
+
+			this->text[this->size] = '\0';
+		};
+
+		void myStrcpy(const char* otext, int osize)
+		{
+			if (this->text != nullptr)
+			{
+				delete[] this->text;
+				this->text = nullptr;
+			}
+
+			this->text = new char[osize + 1];
+			this->size = osize;
+
+			for (int i = 0; i < osize; i++)
+			{
+				this->text[i] = otext[i];
+			}
+
+			this->text[this->size] = '\0';
+		};
 
 		int myChr(char c)
 		{
@@ -326,6 +381,12 @@ class myStr
 			return *this;
 		}
 
+
+
+
+
+
+		
 };
 
 

@@ -7,7 +7,8 @@
 int main()
 {
 	myStr str1("The lazy brown dog jumped over the quick red fox");
-	myStr str2("Kuva tierlist 2020 real stuff");
+	myStr str2("Why does c++ complain that myStr is not myStr (line 43,45)");
+	myStr temp();
 	char c = 'i';
 
 	str1.print();
@@ -26,7 +27,9 @@ int main()
 	str1.print();
 
 
-	myStr str3(str1 + c);
+	/*
+	temp = str1 + c;
+	myStr str3(temp);
 	str3.print();
 
 	myStr str4(c + str1);
@@ -36,8 +39,10 @@ int main()
 	myStr str5("Cool text");
 	myStr str6("Cooler text");
 
-	myStr str5res(str5 + 5);
-	myStr str6res(5 + str5);
+	myStr str5res(str5);
+	str5res.myStrcpy(str5 + 5);
+	myStr str6res(str6);
+	str6res.myStrcpy(5 + str6);
 
 	str5res.print();
 	str6res.print();
@@ -47,7 +52,7 @@ int main()
 
 	++str6res;
 	str6res.print();
-
+	*/
 
 }
 
