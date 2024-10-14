@@ -51,8 +51,9 @@ int main()
 	myStr str5("Cool text");
 	myStr str6("Cooler text");
 
-	myStr str5res(std::move(str5 + 5));
-	myStr str6res(std::move(5 + str6));
+	myStr str5res(str5);
+	str5res = str5 + 5;
+	myStr str6res(5 + str6);
 
 	str5res.print();
 	str6res.print();

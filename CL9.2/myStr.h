@@ -86,7 +86,7 @@ class myStr
 			}
 			this->size = 0;
 
-			printf("\n Destructor used \n");
+			//printf("\n Destructor used \n");
 		}
 
 		myStr operator()(char* buffer)
@@ -381,7 +381,21 @@ class myStr
 			return this->text;
 		}
 
-		
+		myStr operator=(myStr&& other)
+		{
+			if (this == &other)
+			{
+				return *this;
+			}
+
+			this->size = other.size;
+			this->text = other.text;
+			other.size = 0;
+			other.text = nullptr;
+
+			printf("\nMove \"=\" operator used\n");
+			return *this;
+		}
 
 		myStr operator++()
 		{
