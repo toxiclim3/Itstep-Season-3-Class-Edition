@@ -6,9 +6,10 @@
 
 int main()
 {
+	
 	myStr str1("The lazy brown dog jumped over the quick red fox");
-	myStr str2("Why does c++ complain that myStr is not myStr (line 43,45)");
-	myStr temp();
+	myStr str2("I randomly get a memory exception when destroying objects for some reason");
+	myStr temp;
 	char c = 'i';
 
 	str1.print();
@@ -16,10 +17,11 @@ int main()
 
 	
 
-	//myStr str_initlist{ 'C', 'o', 'o', 'l', ' ','o','r',' ','n','o','t','?','\0'};
-	//str_initlist.print();
+	myStr str_initlist{ 'C', 'o', 'o', 'l', ' ','o','r',' ','n','o','t','?','\0'};
+	str_initlist.print();
 
-	/*
+	printf("\n-------------\n");
+
 	printf("The character %c within str2 is at index %i\n", c, str2.myChr(c));
 
 	str2.myDelChr(c);
@@ -33,27 +35,32 @@ int main()
 
 	str1.myStrCat(str2);
 	str1.print();
-	*/
 
-	///*
 
 	printf("\n-------------\n");
+	myStr str3a("AAAAA");
 
-	myStr str3(str1 + c);
-	str3.print();
+	myStr str3b(str3a + c);
+	str3b.print();
 
-	myStr str4(c + str1);
-	str3(str4);
-	str3.print();
+	myStr str4(c + str3a);
+	str3b(str4);
+	str3b.print();
 
 	printf("\n-------------\n");
 	
+		
+	
 	myStr str5("Cool text");
 	myStr str6("Cooler text");
+	
+	int index = 5;
+	printf("The %i-th character of the text \"%s\" is % c",index,str5.getText(),str5[index]);
 
 	myStr str5res(str5);
 	str5res = str5 + 5;
-	myStr str6res(5 + str6);
+	myStr str6res(str6);
+	str6res = 5 + str6;
 
 	str5res.print();
 	str6res.print();
@@ -63,8 +70,7 @@ int main()
 
 	++str6res;
 	str6res.print();
-	///
-
+	
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

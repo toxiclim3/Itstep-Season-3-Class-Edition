@@ -12,6 +12,12 @@ class myStr
 		{
 			this->text = new char[DEFAULT_STR_SIZE + 1];
 			this->size = DEFAULT_STR_SIZE;
+
+			for (int i = 0; i < DEFAULT_STR_SIZE; i++)
+			{
+				this->text[i] = '!';
+			}
+			this->text[DEFAULT_STR_SIZE] = '\0';
 		}
 		explicit myStr(int s)
 		{
@@ -20,17 +26,15 @@ class myStr
 		}
 		myStr(char* text)
 		{
-			this->text = new char[myStrlen(text) + 1];
-			this->size = myStrlen(text);
+			int strlen = myStrlen(text);
 
-			this->myStrcpy(text, myStrlen(text));
+			this->myStrcpy(text, strlen);
 		}
 		myStr(const char* text)
 		{
-			this->text = new char[myStrlen(text) + 1];
-			this->size = myStrlen(text);
+			int strlen = myStrlen(text);
 
-			this->myStrcpy(text, myStrlen(text));
+			this->myStrcpy(text, strlen);
 		}
 		myStr(myStr& other)
 		{
@@ -89,34 +93,28 @@ class myStr
 			//printf("\n Destructor used \n");
 		}
 
-		myStr operator()(char* buffer)
+		char operator[](int index)
 		{
-			if (this->text != nullptr)
+			if (index < 0 || index > this->size)
 			{
-				delete[] this->text;
-				this->text = nullptr;
+				return '\a';
 			}
 
-			this->text = new char[myStrlen(buffer) + 1];
-			strcpy_s(this->text, myStrlen(buffer) + 1, buffer);
+			return this->text[index];
+		}
 
-			this->size = myStrlen(text);
+		myStr operator()(char* buffer)
+		{
+			myStr temp(buffer);
 
+			this->myStrcpy(temp);
 			return *this;
 		};
 		myStr operator()(const char* buffer)
 		{
-			if (this->text != nullptr)
-			{
-				delete[] this->text;
-				this->text = nullptr;
-			}
+			myStr temp(buffer);
 
-			this->text = new char[myStrlen(buffer) + 1];
-			strcpy_s(this->text, myStrlen(buffer) + 1, buffer);
-
-			this->size = myStrlen(text);
-
+			this->myStrcpy(temp);
 			return *this;
 		};
 
@@ -131,16 +129,9 @@ class myStr
 			char buffer[255];
 			std::cin >> buffer;
 
-			if (this->text != nullptr)
-			{
-				delete[] this->text;
-				this->text = nullptr;
-			}
+			myStr temp(buffer);
 
-			this->text = new char[myStrlen(buffer) + 1];
-			strcpy_s(this->text, myStrlen(buffer) + 1, buffer);
-
-			this->size = myStrlen(text);
+			this->myStrcpy(temp);
 		}
 		void print()
 		{
@@ -154,7 +145,7 @@ class myStr
 			{
 				j++;
 			}
-			return j;
+			return j-1;
 		}
 		int myStrlen(char* t)
 		{
@@ -263,16 +254,6 @@ class myStr
 			temp.size--;
 			temp.text[this->size] = '\0';
 
-			if (this->text != nullptr)
-			{
-				delete[] this->text;
-				this->text = nullptr;
-			}
-
-			this->text = new char[this->size];
-			this->size--;
-			
-
 			this->myStrcpy(temp);
 		}
 
@@ -356,7 +337,8 @@ class myStr
 
 		void myStrCat(myStr& other)
 		{
-			myStr temp(this->size + other.size);
+			int newSize = this->size + other.size;
+			myStr temp( newSize );
 
 			for (int i = 0; i < this->size; i++)
 			{
@@ -416,13 +398,13 @@ class myStr
 		myStr operator++(int)
 		{
 			myStr temp(this->size + 1);
-			temp.getText()[0] = '_';
 
 			for (int i = 1, j = 0; i < temp.getSize(); i++)
 			{
 				temp.getText()[i] = this->text[j];
 				j++;
 			}
+			temp.getText()[0] = '_';
 			temp.getText()[temp.getSize()] = '\0';
 
 			this->myStrcpy(temp);
@@ -434,7 +416,8 @@ class myStr
 
 myStr operator+(myStr& str,char c)
 {
-	myStr temp(str.getSize() + 1);
+	int newSize = str.getSize() + 1;
+	myStr temp(newSize);
 
 
 	for (int i = 0; i < temp.getSize() - 1; i++)
@@ -448,7 +431,8 @@ myStr operator+(myStr& str,char c)
 }
 myStr operator+( char c, myStr& str)
 {
-	myStr temp(str.getSize() + 1);
+	int newSize = str.getSize() + 1;
+	myStr temp(newSize);
 	temp.getText()[0] = c;
 
 	for (int i = 1, j = 0; i < temp.getSize(); i++)
@@ -462,7 +446,8 @@ myStr operator+( char c, myStr& str)
 
 myStr operator+(myStr& str,int extra)
 {
-	myStr temp(str.getSize() + extra);
+	int newSize = str.getSize() + extra;
+	myStr temp(newSize);
 
 	for (int i = 0; i < temp.getSize() - extra; i++)
 	{
@@ -479,7 +464,8 @@ myStr operator+(myStr& str,int extra)
 
 myStr operator+(int extra, myStr& str)
 {
-	myStr temp(str.getSize() + extra);
+	int newSize = str.getSize() + extra;
+	myStr temp(newSize);
 
 	for (int i = 0; i < extra; i++)
 	{
