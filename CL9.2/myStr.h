@@ -44,8 +44,24 @@ class myStr
 			}
 
 			this->text[this->size] = '\0';
-		}
 
+			printf("\nCopy constructor used\n");
+		}
+		myStr(myStr&& other)
+		{
+			if (this == &other)
+			{
+				return;
+			}
+
+			this->size = other.size;
+			this->text = other.text;
+			other.size = 0;
+			other.text = nullptr;
+
+			printf("\nMove constructor used\n");
+			
+		}
 		myStr(std::initializer_list<char> a)
 		{
 			printf("Constructed via initializer list\n");
@@ -69,6 +85,8 @@ class myStr
 				this->text = nullptr;
 			}
 			this->size = 0;
+
+			printf("\n Destructor used \n");
 		}
 
 		myStr operator()(char* buffer)
@@ -105,6 +123,7 @@ class myStr
 		myStr operator()(myStr& str)
 		{
 			this->myStrcpy(str);
+			return *this;
 		}
 
 		void input()
@@ -394,14 +413,7 @@ class myStr
 
 			this->myStrcpy(temp);
 			return *this;
-		}
-
-
-
-
-
-
-		
+		}	
 };
 
 
@@ -444,7 +456,7 @@ myStr operator+(myStr& str,int extra)
 	}
 	for (int i = temp.getSize() - extra; i < temp.getSize(); i++)
 	{
-		temp.getText()[i] = ' ';
+		temp.getText()[i] = '_';
 	}
 	temp.getText()[temp.getSize()] = '\0';
 

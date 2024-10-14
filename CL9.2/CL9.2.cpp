@@ -14,11 +14,12 @@ int main()
 	str1.print();
 	str2.print();
 
-
-	myStr str_initlist{ 'C', 'o', 'o', 'l', ' ','o','r',' ','n','o','t','?','\0'};
-	str_initlist.print();
-
 	
+
+	//myStr str_initlist{ 'C', 'o', 'o', 'l', ' ','o','r',' ','n','o','t','?','\0'};
+	//str_initlist.print();
+
+	/*
 	printf("The character %c within str2 is at index %i\n", c, str2.myChr(c));
 
 	str2.myDelChr(c);
@@ -32,25 +33,26 @@ int main()
 
 	str1.myStrCat(str2);
 	str1.print();
+	*/
 
+	///*
 
+	printf("\n-------------\n");
 
-	temp = str1 + c;
-	myStr str3(temp);
+	myStr str3(str1 + c);
 	str3.print();
 
 	myStr str4(c + str1);
 	str3(str4);
 	str3.print();
 
+	printf("\n-------------\n");
 	
 	myStr str5("Cool text");
 	myStr str6("Cooler text");
 
-	myStr str5res(str5);
-	str5res.myStrcpy(str5 + 5);
-	myStr str6res(str6);
-	str6res.myStrcpy(5 + str6);
+	myStr str5res(std::move(str5 + 5));
+	myStr str6res(std::move(5 + str6));
 
 	str5res.print();
 	str6res.print();
@@ -60,7 +62,7 @@ int main()
 
 	++str6res;
 	str6res.print();
-	
+	///
 
 }
 
