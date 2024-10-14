@@ -51,12 +51,13 @@ class myStr
 			printf("Constructed via initializer list\n");
 			printf("Size is %i\n", a.size());
 			this->size = a.size();
-			this->text = new char[a.size() + 1];
+			this->text = new char[a.size()+1];
 			for (auto x = a.begin(); x != a.end(); x++)
 			{
 				*text = *x;
 				text++;
 			}
+			this->text[this->size] = '\0';
 			text -= size;
 		}
 
@@ -70,7 +71,7 @@ class myStr
 			this->size = 0;
 		}
 
-		/*myStr operator()(char* buffer)
+		myStr operator()(char* buffer)
 		{
 			if (this->text != nullptr)
 			{
@@ -82,6 +83,8 @@ class myStr
 			strcpy_s(this->text, myStrlen(buffer) + 1, buffer);
 
 			this->size = myStrlen(text);
+
+			return *this;
 		};
 		myStr operator()(const char* buffer)
 		{
@@ -95,7 +98,14 @@ class myStr
 			strcpy_s(this->text, myStrlen(buffer) + 1, buffer);
 
 			this->size = myStrlen(text);
-		};*/
+
+			return *this;
+		};
+
+		myStr operator()(myStr& str)
+		{
+			this->myStrcpy(str);
+		}
 
 		void input()
 		{
@@ -352,16 +362,7 @@ class myStr
 			return this->text;
 		}
 
-		void operator()(myStr& str)
-		{
-			this->myStrcpy(str);
-		}
-
-		void operator()(char*& str)
-		{
-			myStr temp(str);
-			this->myStrcpy(temp);
-		}
+		
 
 		myStr operator++()
 		{

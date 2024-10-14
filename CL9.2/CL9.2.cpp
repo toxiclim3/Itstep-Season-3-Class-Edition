@@ -14,7 +14,11 @@ int main()
 	str1.print();
 	str2.print();
 
-	/*
+
+	myStr str_initlist{ 'C', 'o', 'o', 'l', ' ','o','r',' ','n','o','t','?','\0'};
+	str_initlist.print();
+
+	
 	printf("The character %c within str2 is at index %i\n", c, str2.myChr(c));
 
 	str2.myDelChr(c);
@@ -56,7 +60,7 @@ int main()
 
 	++str6res;
 	str6res.print();
-	*/
+	
 
 }
 
