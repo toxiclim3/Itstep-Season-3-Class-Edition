@@ -1,20 +1,66 @@
-﻿// CL10.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
-#include <iostream>
-
-int main()
+﻿#include<iostream>
+using namespace std;
+class A
 {
-    std::cout << "Hello World!\n";
+	int* data;
+	int size;
+public:
+	A()
+	{
+		data = nullptr;
+		size = 0;
+	}
+	A(int ar[], int Size)
+	{
+		cout << "Constructed the array\n";
+		size = Size;
+		data = new int[size];
+		for (int i = 0; i < size; i++)
+		{
+			data[i] = ar[i];
+		}
+	}
+
+	A(initializer_list<int> a)
+	{
+		printf("Constructed via initializer list\n");
+		printf("Size is %i\n", a.size());
+		size = a.size();
+		data = new int[size];
+		for (auto x = a.begin(); x != a.end; x++)
+		{
+			*data = *x;
+			data++;
+		}
+		data -= size;
+	}
+
+	void Output()
+	{
+		for (int i = 0; i < size; i++)
+		{
+			//cout << str[i] << "\t";
+			//cout << *(str + i) << "\t";
+
+			cout << *data << " ";
+			data++;
+		}
+		data -= size;
+		cout << endl;
+	}
+	~A()
+	{
+		delete[] data;
+	}
+
+};
+void main()
+{
+
+	int mas[]{ 2,4,6,8 };
+	A b{ mas,4 };
+	b.Output();
+
+
+	system("pause");
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
