@@ -14,7 +14,7 @@ int main()
 	str1.print();
 	str2.print();
 
-
+	/*
 	printf("The character %c within str2 is at index %i\n", c, str2.myChr(c));
 
 	str2.myDelChr(c);
@@ -30,7 +30,7 @@ int main()
 	str1.print();
 
 
-	
+
 	temp = str1 + c;
 	myStr str3(temp);
 	str3.print();
@@ -39,7 +39,7 @@ int main()
 	str3(str4);
 	str3.print();
 
-	/*
+	
 	myStr str5("Cool text");
 	myStr str6("Cooler text");
 

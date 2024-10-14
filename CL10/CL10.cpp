@@ -27,7 +27,7 @@ public:
 		printf("Size is %i\n", a.size());
 		size = a.size();
 		data = new int[size];
-		for (auto x = a.begin(); x != a.end; x++)
+		for (auto x = a.begin(); x != a.end(); x++)
 		{
 			*data = *x;
 			data++;

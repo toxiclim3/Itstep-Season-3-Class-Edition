@@ -46,13 +46,13 @@ class myStr
 			this->text[this->size] = '\0';
 		}
 
-		myStr(initializer_list<char> a)
+		myStr(std::initializer_list<char> a)
 		{
 			printf("Constructed via initializer list\n");
 			printf("Size is %i\n", a.size());
 			this->size = a.size();
-			this->text = new char[a.size+1];
-			for (auto x = a.begin(); x != a.end; x++)
+			this->text = new char[a.size() + 1];
+			for (auto x = a.begin(); x != a.end(); x++)
 			{
 				*text = *x;
 				text++;
