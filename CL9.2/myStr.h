@@ -69,7 +69,7 @@ class myStr
 		myStr(std::initializer_list<char> a)
 		{
 			printf("Constructed via initializer list\n");
-			printf("Size is %i\n", a.size());
+			printf("Size is %i\n", static_cast<int>(a.size()));
 			this->size = a.size();
 			this->text = new char[a.size()+1];
 			for (auto x = a.begin(); x != a.end(); x++)
@@ -123,6 +123,84 @@ class myStr
 			this->myStrcpy(str);
 			return *this;
 		}
+
+		myStr operator=(myStr& other)
+		{
+			if (this == &other)
+			{
+				printf("returned early !!!!\n");
+				return *this;
+			}
+
+			this->text = new char[other.size + 1];
+			this->size = other.size;
+
+			for (int i = 0; i < other.size; i++)
+			{
+				this->text[i] = other.text[i];
+			}
+
+			this->text[this->size] = '\0';
+
+			return *this;
+		}
+
+		myStr operator=(char* buffer)
+		{
+			this->myStrcpy(buffer);
+
+			return *this;
+		}
+
+		myStr operator=(myStr&& other)
+		{
+			if (this == &other)
+			{
+				return *this;
+			}
+
+			this->size = other.size;
+			this->text = other.text;
+			other.size = 0;
+			other.text = nullptr;
+
+			printf("\nMove \"=\" operator used\n");
+			return *this;
+		}
+
+		myStr operator++()
+		{
+			myStr temp(this->size + 1);
+
+
+			for (int i = 0; i < temp.getSize() - 1; i++)
+			{
+				temp.getText()[i] = this->text[i];
+			}
+			temp.getText()[temp.getSize() - 1] = '_';
+			temp.getText()[temp.getSize()] = '\0';
+
+			this->myStrcpy(temp);
+			return *this;
+		}
+
+		myStr operator++(int)
+		{
+			myStr temp(this->size + 1);
+
+			for (int i = 1, j = 0; i < temp.getSize(); i++)
+			{
+				temp.getText()[i] = this->text[j];
+				j++;
+			}
+			temp.getText()[0] = '_';
+			temp.getText()[temp.getSize()] = '\0';
+
+			this->myStrcpy(temp);
+			return *this;
+		}
+
+
 
 		void input()
 		{
@@ -202,6 +280,25 @@ class myStr
 			this->size = osize;
 
 			for (int i = 0; i < osize; i++)
+			{
+				this->text[i] = otext[i];
+			}
+
+			this->text[this->size] = '\0';
+		};
+
+		void myStrcpy(char* otext)
+		{
+			if (this->text != nullptr)
+			{
+				delete[] this->text;
+				this->text = nullptr;
+			}
+
+			this->text = new char[myStrlen(otext) + 1];
+			this->size = myStrlen(otext);
+
+			for (int i = 0; i < myStrlen(otext); i++)
 			{
 				this->text[i] = otext[i];
 			}
@@ -353,63 +450,16 @@ class myStr
 			this->myStrcpy(temp);
 		}
 
-		int getSize()
+		int getSize() const
 		{
 			return this->size;
 		}
 
-		char* getText()
+		char* getText() const
 		{
 			return this->text;
 		}
 
-		myStr operator=(myStr&& other)
-		{
-			if (this == &other)
-			{
-				return *this;
-			}
-
-			this->size = other.size;
-			this->text = other.text;
-			other.size = 0;
-			other.text = nullptr;
-
-			printf("\nMove \"=\" operator used\n");
-			return *this;
-		}
-
-		myStr operator++()
-		{
-			myStr temp(this->size + 1);
-
-
-			for (int i = 0; i < temp.getSize() - 1; i++)
-			{
-				temp.getText()[i] = this->text[i];
-			}
-			temp.getText()[temp.getSize() - 1] = '_';
-			temp.getText()[temp.getSize()] = '\0';
-
-			this->myStrcpy(temp);
-			return *this;
-		}
-
-		myStr operator++(int)
-		{
-			myStr temp(this->size + 1);
-
-			for (int i = 1, j = 0; i < temp.getSize(); i++)
-			{
-				temp.getText()[i] = this->text[j];
-				j++;
-			}
-			temp.getText()[0] = '_';
-			temp.getText()[temp.getSize()] = '\0';
-
-			this->myStrcpy(temp);
-			return *this;
-		}	
 };
 
 
@@ -481,3 +531,57 @@ myStr operator+(int extra, myStr& str)
 	return temp;
 }
 
+std::ostream& operator<<(std::ostream& os, const myStr str)
+{
+	printf("\n<< operator used\n");
+
+	for (int i = 0; i < str.getSize(); i++)
+	{
+		os << str.getText()[i];
+	}
+	return os;
+};
+std::istream& operator>>(std::istream& is, myStr& str)
+{
+	printf("\n>> operator used\n");
+
+	char buffer[255];
+
+	std::cin >> buffer;
+	
+	str.myStrcpy(buffer);
+
+	return is;
+};
+
+/*
+
+ostream& operator<<(ostream& os, const Foo& obj)
+{
+	os << "ostream& operator<<(ostream& os, const Foo& obj)" << endl;
+
+	os << obj.GetInt() << endl;
+	os << obj.GetChar() << endl;
+	//os << obj.m_data << endl << obj.m_character << endl;
+
+	return os;
+}
+
+istream& operator>>(istream& is, Foo& obj)
+{
+	cout << "istream& operator>>(istream& is, Foo& obj)" << endl;
+
+	cout << "m_data = ";
+	int a;
+	cin >> a;
+	obj.SetInt(a);
+
+	cout << "m_character = ";
+	char b;
+	is >> b;
+	obj.SetChar(b);
+
+	return is;
+}
+
+*/

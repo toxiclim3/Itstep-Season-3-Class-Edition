@@ -24,7 +24,7 @@ public:
 	A(initializer_list<int> a)
 	{
 		printf("Constructed via initializer list\n");
-		printf("Size is %i\n", a.size());
+		printf("Size is %i\n", static_cast<int>(a.size()));
 		size = a.size();
 		data = new int[size];
 		for (auto x = a.begin(); x != a.end(); x++)
