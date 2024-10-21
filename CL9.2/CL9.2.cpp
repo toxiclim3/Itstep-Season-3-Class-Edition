@@ -18,7 +18,6 @@ int main()
 	str2.print();
 
 	/*
-
 	myStr str_initlist{ 'C', 'o', 'o', 'l', ' ','o','r',' ','n','o','t','?','\0' };
 	str_initlist.print();
 
@@ -73,7 +72,7 @@ int main()
 	++str6res;
 	str6res.print();
 	*/
-
+	
 	myStr str1EqualsStr1 = str1;
 	str1EqualsStr1.print();
 
@@ -87,7 +86,7 @@ int main()
 	std::cin >> str1EqualsStr1;
 
 	std::cout << "New text: " << str1EqualsStr1 << "\n";
-
+	
 }
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
