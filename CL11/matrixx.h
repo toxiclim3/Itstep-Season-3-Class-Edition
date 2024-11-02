@@ -1,110 +1,222 @@
 #pragma once
+#include <iostream>
 #include <random>
+#include <ctime>
 
-/*void initializeArray(matrix& mx)
-{
-    
-}
-*/
+template <class T>
+class matrix {
+private:
+    int rows;
+    int cols;
+    T** data;
 
-template<class T >
-class matrix
-{
-    private:
-        int hsize;
-        int vsize;
-        T** array;
-    public:
-
-        matrix() :hsize(0),vsize(0)
+public:
+    matrix(int rows = 0, int cols = 0) : rows(rows), cols(cols) 
+    {
+        this->data = new T * [this->rows];
+        for (int i = 0; i < this->rows; ++i)
         {
-            this->array = nullptr;
+            this->data[i] = new T[this->cols]();
         }
-        matrix(int hsize,int vsize)
+    }
+
+    matrix(matrix& other) : rows(other.rows), cols(other.cols)
+    {
+        for (int i = 0; i < this->rows; ++i)
         {
-            this->array = new T* [this->vsize];
-
-            for (int i = 0; i < vsize)
+            for (int j = 0; j < this->cols; ++j)
             {
-                this->array[i] = new T[this->hsize];
-            };
-
-            for (int i = 0; i < vsize; i++)
-            {
-                for (int j = 0; j < hsize; j++)
-                {
-                    this->array = 0;
-                }
+               this->data[i][j] = other.data[i][j];
             }
-
         }
+    }
 
-        ~matrix()
+    ~matrix() 
+    {
+        for (int i = 0; i < this->rows; ++i) 
         {
-            for (int i = 0; i < vsize; i++)
-            {
-                if (this->array[i] != nullptr)
-                {
-                    delete[] this->array[i];
-                    this->array[i] = nullptr;
-                }
-            }
-            delete[] this->array;
-            this->array = nullptr;
+            delete[] this->data[i];
         }
+        delete[] this->data;
+    }
 
-        void fill_user()
+    void fill_user() 
+    {
+        std::cout << "Enter values for a " << this->rows << "x" << this->cols << " matrix:\n";
+        for (int i = 0; i < this->rows; ++i)
         {
-            printf("\nEnter the vertical size:\n");
-            while (!(this->vsize > 0))
+            for (int j = 0; j < this->cols; ++j)
             {
-                std::cin >> this->vsize;
+                std::cin >> this->data[i][j];
             }
-
-            printf("\nEnter the horizontal size:\n");
-            while (!(this->hsize > 0))
-            {
-                std::cin >> this->hsize;
-            }
-
-            for (int i = 0; j < mx.vsize; j++)
-            {
-                for (int j = 0; i < mx.hsize; i++)
-                {
-                    std::cin >> mx.array[i][j];
-                }
-            }
-            
         }
+    }
 
-        void fill_Random()
+    int random_val(int min = 0, int max = 100)
+    {
+        static std::mt19937 mt(static_cast<unsigned int>(std::time(0)));
+        std::uniform_int_distribution<> rand(min, max);
+        return rand(mt);
+    }
+
+    char random_val(char min = 0, char max = 100)
+    {
+        static std::mt19937 mt(static_cast<unsigned int>(std::time(0)));
+        std::uniform_int_distribution<> rand( static_cast<int>(min), static_cast<int>(max) );
+        return rand(mt);
+    }
+
+    double random_val(double min = 0, double max = 100)
+    {
+        static std::mt19937 mt(static_cast<unsigned int>(std::time(0)));
+        std::uniform_real_distribution<> rand(min, max);
+        return rand(mt);
+    }
+
+    float random_val(float min = 0, float max = 100)
+    {
+        static std::mt19937 mt(static_cast<unsigned int>(std::time(0)));
+        std::uniform_real_distribution<> rand(min, max);
+        return rand(mt);
+    }
+
+    void fill_random(T min = 0, T max = 100) 
+    {
+        
+        for (int i = 0; i < this->rows; ++i)
         {
-            static std::mt19937 mt{ static_cast<unsigned int>(time(0)) };
-            std::uniform_real_distribution<> random_real{ 0, 32 };
-
-            for (int i = 0; j < mx.vsize; j++)
+            for (int j = 0; j < this->cols; ++j)
             {
-                for (int j = 0; i < mx.hsize; i++)
-                {
-                    mx.array[i][j] = random(mt);
-                    std::cout << mx.array[i] << " ";
-                }
+                this->data[i][j] = static_cast<T>(random_val(min,max));
+            }
+        }
+    }
+
+    void display() const {
+        for (int i = 0; i < this->rows; ++i)
+        {
+            for (int j = 0; j < this->cols; ++j)
+            {
+                std::cout << this->data[i][j] << " ";
             }
             std::cout << "\n";
         }
+        std::cout << "\n";
+    }
 
-        void display()
+    T maxElement() const 
+    {
+        T maxVal = this->data[0][0];
+        for (int i = 0; i < this->rows; ++i)
         {
-            for (int i = 0; j < mx.vsize; j++)
+            for (int j = 0; j < this->cols; ++j)
             {
-                for (int j = 0; i < mx.hsize; i++)
-                {
-                    std::cout << mx.array[i] << " ";
-                }
-                std::cout << "\n";
+                if (this->data[i][j] > maxVal) maxVal = this->data[i][j];
             }
-            std::cout << "\n\n";
+        }
+        return maxVal;
+    }
+
+    T minElement() const 
+    {
+        T minVal = this->data[0][0];
+        for (int i = 0; i < this->rows; ++i)
+        {
+            for (int j = 0; j < this->cols; ++j)
+            {
+                if (this->data[i][j] < minVal) minVal = this->data[i][j];
+            }
+        }
+        return minVal;
+    }
+
+    matrix<T> operator+(const matrix<T>& other) const 
+    {
+        matrix result(this->rows, this->cols);
+        for (int i = 0; i < this->rows; ++i) 
+        {
+            for (int j = 0; j < this->cols; ++j) 
+            {
+                result.data[i][j] = this->data[i][j] + other.data[i][j];
+            }
+        }
+        return result;
+    }
+
+    matrix<T> operator-(const matrix<T>& other) const 
+    {
+        matrix result(this->rows, this->cols);
+        for (int i = 0; i < this->rows; ++i) 
+        {
+            for (int j = 0; j < this->cols; ++j) 
+            {
+                result.data[i][j] = this->data[i][j] - other.data[i][j];
+            }
+        }
+        return result;
+    }
+
+    matrix<T> operator*(const matrix<T>& other) const 
+    {
+        matrix result(this->rows, other.cols);
+        for (int i = 0; i < this->rows; ++i) 
+        {
+            for (int j = 0; j < other.cols; ++j) 
+            {
+                    result.data[i][j] = this->data[i][j] * other.data[i][j];
+            }
+        }
+        return result;
+    }
+
+    matrix<T> operator/(const matrix<T>& other) const
+    {
+        matrix result(this->rows, this->cols);
+        for (int i = 0; i < this->rows; ++i) 
+        {
+            for (int j = 0; j < this->cols; ++j) 
+            {
+                if (this->data[i][j] == 0 || other.data[i][j] == 0)
+                {
+                    result.data[i][j] = 0;
+                }
+                else
+                {
+                    result.data[i][j] = this->data[i][j] / other.data[i][j];
+                }
+                //std::cout << static_cast<int>(result.data[i][j]) << " ";
+            }
+            //std::cout << "\n";
+        }
+        return result;
+    }
+    
+    matrix<T> operator=(T& other) const 
+    {
+        for (int i = 0; i < this->rows; ++i)
+        {
+            delete[] this->data[i];
+        }
+        delete[] this->data;
+
+        this->rows = other.rows;
+        this->cols = other.cols;
+
+        this->data = new T * [this->rows];
+        for (int i = 0; i < this->rows; ++i)
+        {
+            this->data[i] = new T[this->cols]();
         }
 
 
+        
+        for (int i = 0; i < this->rows; ++i) 
+        {
+            for (int j = 0; j < this->cols; ++j) 
+            {
+                this->data[i][j] = other.data[i][j];
+            }
+        }
+        return *this;
+    }
 };

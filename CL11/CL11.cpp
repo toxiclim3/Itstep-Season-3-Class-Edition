@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include "matrixx.h"
-//#include "Class_Templ.h"
 
 /*
 
@@ -26,7 +25,48 @@
 
 int main()
 {
-    matrix mx();
+    matrix<int> matrix_random(5,5);
+    //matrix<char> matrix_random(5,5);
+    //matrix<float> matrix_random(5,5);
+
+    matrix_random.fill_random(50, 99);
+
+    matrix_random.display();
+
+    std::cout << "The maximum element in the matrix is " << matrix_random.maxElement() << "\n";
+    std::cout << "The minimum element in the matrix is " << matrix_random.minElement() << "\n";
+
+    //matrix<int> matrix_user(5, 5);
+    ////matrix<char> matrix_user(5, 5);
+    ////matrix<float> matrix_user(5, 5);
+
+    //matrix_user.fill_user();
+
+    //matrix_user.display();
+
+    matrix<int> matrix_random2(5, 5);
+    //matrix<char> matrix_random2(5, 5);
+    //matrix<float> matrix_random2(5, 5);
+
+    matrix_random2.fill_random(50, 99);
+    matrix_random2.display();
+
+    printf("\nResult using the \"+\" operator:\n");
+    matrix<int> res1 = matrix_random + matrix_random2;
+    res1.display();
+
+    printf("\nResult using the \"-\" operator:\n");
+    matrix<int> res2 = matrix_random - matrix_random2;
+    res2.display();
+
+    printf("\nResult using the \"*\" operator:\n");
+    matrix<int> res3 = matrix_random * matrix_random2;
+    res3.display();
+
+    printf("\nResult using the \"/\" operator:\n");
+    matrix<int> res4 = matrix_random / matrix_random2;
+    res4.display();
+
 
 
 }
