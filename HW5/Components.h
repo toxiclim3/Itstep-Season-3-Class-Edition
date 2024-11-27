@@ -8,6 +8,8 @@ private:
 	int cores;
 	double frequency;
 public:
+	cpu() = default;
+
 	cpu(const char* manuf, const char* model, int cores, double frequency) : cores(cores), frequency(frequency)
 	{
 		this->manufacturer = new char[strlen(manuf) + 1];
@@ -59,6 +61,8 @@ private:
 	double frequency; //speed
 	int size;
 public:
+	ssd() = default;
+
 	ssd(const char* manuf, const char* model, int size, double frequency) : size(size), frequency(frequency)
 	{
 		this->manufacturer = new char[strlen(manuf) + 1];
@@ -102,7 +106,7 @@ public:
 	}
 };
 
-class graphicsCard
+class gpu
 {
 private:
 	char* manufacturer;
@@ -112,7 +116,9 @@ private:
 	int vram_size;
 	double vram_frequency;
 public:
-	graphicsCard(const char* manuf, const char* model, int cores, double frequency, int vram_size, double vram_freq) : cores(cores), frequency(frequency), vram_size(vram_size), vram_frequency(vram_freq)
+	gpu() = default;
+
+	gpu(const char* manuf, const char* model, int cores, double frequency, int vram_size, double vram_freq) : cores(cores), frequency(frequency), vram_size(vram_size), vram_frequency(vram_freq)
 	{
 		this->manufacturer = new char[strlen(manuf) + 1];
 		strcpy_s(this->manufacturer, strlen(manuf) + 1, manuf);
@@ -120,7 +126,7 @@ public:
 		this->model = new char[strlen(model) + 1];
 		strcpy_s(this->model, strlen(model) + 1, model);
 	}
-	graphicsCard(char* manuf, char* model, int cores, double frequency, int vram_size, double vram_freq) : cores(cores), frequency(frequency), vram_size(vram_size), vram_frequency(vram_freq)
+	gpu(char* manuf, char* model, int cores, double frequency, int vram_size, double vram_freq) : cores(cores), frequency(frequency), vram_size(vram_size), vram_frequency(vram_freq)
 	{
 		this->manufacturer = new char[strlen(manuf) + 1];
 		strcpy_s(this->manufacturer, strlen(manuf) + 1, manuf);
@@ -128,7 +134,7 @@ public:
 		this->model = new char[strlen(model) + 1];
 		strcpy_s(this->model, strlen(model) + 1, model);
 	}
-	graphicsCard(graphicsCard& other) : cores(other.cores), frequency(other.frequency), vram_size(other.vram_size), vram_frequency(other.vram_frequency)
+	gpu(gpu& other) : cores(other.cores), frequency(other.frequency), vram_size(other.vram_size), vram_frequency(other.vram_frequency)
 	{
 		this->manufacturer = new char[strlen(other.manufacturer) + 1];
 		strcpy_s(this->manufacturer, strlen(other.manufacturer) + 1, other.manufacturer);
@@ -171,6 +177,8 @@ private:
 	int size;
 	double frequency;
 public:
+	ram() = default;
+
 	ram(const char* manuf, const char* model, int size, double frequency) : size(size), frequency(frequency)
 	{
 		this->manufacturer = new char[strlen(manuf) + 1];

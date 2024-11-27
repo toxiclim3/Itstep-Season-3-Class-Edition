@@ -9,13 +9,35 @@ using namespace std;
 
 int main()
 {
-	laptop thatOne("Asus","Omen","Graphite black","Intel","11th gen i7",6,3.4,"Nvidia","RTX 4060 super (real)",6,4,12,3600,"Kingston","FURY",16,3600,"Smasnug","EVO 870",2048,2000);
+	cpu _cpu("Intel","Atom",2,1.6);
+	gpu _gpu("Invidia","GTX 680",4,2,4,2200);
+	ram _ram("Kingston","FURY",8,2200);
+	ssd _ssd("Kingston 2", "IDk", 220, 1600);
 
-	thatOne.display();
+	cpu* cpuP = new cpu(_cpu);
+	gpu* gpuP = new gpu(_gpu);
+	ram* ramP = new ram(_ram);
+	ssd* ssdP = new ssd(_ssd);
 
-	laptop theOtherOne(thatOne);
 
-	theOtherOne.display();
+
+	const char* manufacturer = "Asus";
+	const char* model = "Thingamabook";
+	const char* color = "Gray";
+
+
+	laptop* thatOne = new laptop(manufacturer,model,color,cpuP, ssdP, gpuP, ramP);
+
+	thatOne->display();
+
+	delete thatOne;
+
+	//cpuP и gpuP удаляются, но я не знаю как их тут делать автоматически nullptr (если вообще можно)
+
+	//cout << gpuP->getModel() << endl; вызывает исключение как и ожидается
+
+	cpuP = nullptr;
+	gpuP = nullptr;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
