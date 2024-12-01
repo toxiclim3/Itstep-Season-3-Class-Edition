@@ -2,7 +2,6 @@
 
 #include "Employer.h"
 
-
 class manager : public employer
 {
 	private:
@@ -10,37 +9,41 @@ class manager : public employer
 	public:
 		manager() : employer()
 		{
-			department = nullptr;
-		}
+			this->department = nullptr;
+		};
 
 		manager(const char* n, const char* p, const char* d) : employer(n, p)
 		{
-			department = new char[strlen(d) + 1];
-			strcpy_s(department, strlen(d), d);
-		}
+			this->department = new char[strlen(d) + 1];
+			strcpy_s(this->department, strlen(d) + 1, d);
+		};
 
 		~manager()
 		{
 			if (name != nullptr)
 			{
-				delete[] name;
+				delete[] this->name;
+				this->name = nullptr;
 			}
 
 			if (position != nullptr)
 			{
-				delete[] position;
+				delete[] this->position;
+				this->position = nullptr;
 			}
 
 			if (department != nullptr)
 			{
-				delete[] department;
+				delete[] this->department;
+				this->department = nullptr;
 			}
-		}
+		};
 
 		void print()
 		{
-			std::printf("Name: %s\n", name);
-			std::printf("Position: %s\n", position);
-			std::printf("Department: %s\n", department);
-		}
+			printf("Name: %s\n", this->name);
+			printf("Position: %s\n", this->position);
+			printf("Department: %s\n", this->department);
+			printf("\n");
+		};
 };

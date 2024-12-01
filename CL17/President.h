@@ -10,37 +10,41 @@ class president : public employer
 	public:
 		president() : employer()
 		{
-			country = nullptr;
+			this->country = nullptr;
 		}
 
 		president(const char* n, const char* p, const char* c) : employer(n, p)
 		{
-			country = new char[strlen(c) + 1];
-			strcpy_s(country, strlen(c), c);
+			this->country = new char[strlen(c) + 1];
+			strcpy_s(this->country, strlen(c) + 1, c);
 		}
 
 		~president()
 		{
-			if (name != nullptr)
+			if (this->name != nullptr)
 			{
-				delete[] name;
+				delete[] this->name;
+				this->name = nullptr;
 			}
 
-			if (position != nullptr)
+			if (this->position != nullptr)
 			{
-				delete[] position;
+				delete[] this->position;
+				this->position = nullptr;
 			}
 
-			if (country != nullptr)
+			if (this->country != nullptr)
 			{
-				delete[] country;
+				delete[] this->country;
+				this->country = nullptr;
 			}
 		}
 
 		void print()
 		{
-			std::printf("Name: %s\n",name);
-			std::printf("Position: %s\n",position);
-			std::printf("Country: %s\n",country);
+			printf("Name: %s\n", this->name);
+			printf("Position: %s\n", this->position);
+			printf("Country: %s\n", this->country);
+			printf("\n");
 		}
 };

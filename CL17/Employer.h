@@ -10,31 +10,36 @@ class employer
 	public:
 		employer()
 		{
-			name = nullptr;
-			position = nullptr;
+			this->name = nullptr;
+			this->position = nullptr;
 		};
 
 		employer(const char* n, const char* p)
 		{
-			name = new char[strlen(n) + 1];
-			strcpy_s(name, strlen(n), n);
+			this->name = new char[strlen(n) + 1];
+			strcpy_s(this->name, strlen(n) + 1, n);
 
-			position = new char[strlen(p) + 1];
-			strcpy_s(position, strlen(p), p);
+			this->position = new char[strlen(p) + 1];
+			strcpy_s(this->position, strlen(p) + 1, p);
 		};
 
 		~employer()
 		{
-			if (name != nullptr)
+			if (this->name != nullptr)
 			{
-				delete[] name;
+				delete[] this->name;
+				this->name = nullptr;
 			}
 
-			if (position != nullptr)
+			if (this->position != nullptr)
 			{
-				delete[] position;
+				delete[] this->position;
+				this->position = nullptr;
 			}
 		};
 
-		virtual void print();
-}
+		virtual void print()
+		{
+
+		};
+};
