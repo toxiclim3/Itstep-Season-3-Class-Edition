@@ -24,6 +24,7 @@ class worker : public employer
 			if (name != nullptr)
 			{
 				delete[] name;
+				name = nullptr;
 			};
 
 			if (position != nullptr)
